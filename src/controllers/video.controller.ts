@@ -13,7 +13,9 @@ export const createVideo = async (req: Request, res: Response) => {
 
 export const getVideos = async (req: Request, res: Response) => {
   try {
-    const videos = await Video.find().sort({ createdAt: -1 });
+    const { category } = req.query;
+    const filter = category ? { category } : {};
+    const videos = await Video.find(filter).sort({ createdAt: -1 });
     res.json(videos);
   } catch (error) {
     res.status(500).json({ message: "Error fetching videos", error });

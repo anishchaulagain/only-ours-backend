@@ -6,6 +6,7 @@ export interface IVideo extends Document {
   videoUrl: string;
   thumbnailUrl: string;
   genre: string;
+  category: string;
   duration?: string;
   year?: number;
   createdAt: Date;
@@ -17,6 +18,7 @@ const VideoSchema: Schema = new Schema({
   videoUrl: { type: String, required: true },
   thumbnailUrl: { type: String, required: true },
   genre: { type: String, required: true },
+  category: { type: String, required: true, default: "memory" },
   duration: { type: String },
   year: { type: Number },
   createdAt: { type: Date, default: Date.now },

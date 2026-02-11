@@ -13,7 +13,9 @@ export const createImage = async (req: Request, res: Response) => {
 
 export const getImages = async (req: Request, res: Response) => {
   try {
-    const images = await Gallery.find().sort({ createdAt: -1 });
+    const { category } = req.query;
+    const filter = category ? { category } : {};
+    const images = await Gallery.find(filter).sort({ createdAt: -1 });
     res.json(images);
   } catch (error) {
     res.status(500).json({ message: "Error fetching images", error });
