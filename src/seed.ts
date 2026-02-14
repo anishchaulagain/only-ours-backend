@@ -3,6 +3,7 @@ import { connectDB } from "./config/db.config";
 import User from "./models/user.model";
 import Video from "./models/video.model";
 import Gallery from "./models/gallery.model";
+import Category from "./models/category.model";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
@@ -14,6 +15,19 @@ const seedData = async () => {
 
     console.log("Clearing existing data...");
     await User.deleteMany({});
+    await Video.deleteMany({});
+    await Gallery.deleteMany({});
+    await Category.deleteMany({});
+
+    console.log("Seeding categories...");
+    const initialCategories = [
+      { name: "movie", type: "video", description: "Cinematic movies and originals" },
+      { name: "memory", type: "video", description: "Personal video memories" },
+      { name: "travel", type: "image", description: "Travel photos" },
+      { name: "events", type: "image", description: "Event and party photos" },
+      { name: "general", type: "image", description: "General photos" }
+    ];
+    await Category.insertMany(initialCategories);
 
     console.log("Seeding new users...");
     const hashedPasswordAdmin = await bcrypt.hash("admin_password_secure", 10);
